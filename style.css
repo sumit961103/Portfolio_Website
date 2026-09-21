@@ -341,7 +341,7 @@ ul { list-style: none; }
 .hero-tagline {
   font-size: 16px;
   color: var(--clr-on-surface-var);
-  max-width: 500px;
+  max-width: min(500px, 92vw);
   line-height: 1.7;
 }
 .hero-actions {
@@ -425,7 +425,7 @@ ul { list-style: none; }
   color: var(--clr-on-surface-var);
   line-height: 1.8;
   margin-bottom: var(--sp-md);
-  max-width: 720px;
+  max-width: min(720px, 100%);
 }
 
 /* ─── Skills ─────────────────────────────────────────────────── */
@@ -762,9 +762,10 @@ ul { list-style: none; }
   position: absolute;
   top: 50%; left: 50%;
   transform: translate(-50%, -50%);
-  width: 600px; height: 600px;
+  width: min(600px, 100vw); height: min(600px, 100vw);
   background: radial-gradient(circle, rgba(212,175,55,0.04) 0%, transparent 65%);
   pointer-events: none;
+  overflow: hidden;
 }
 .contact-sub { font-size: 16px; color: var(--clr-on-surface-var); margin: var(--sp-md) 0 var(--sp-2xl); }
 .contact-form {
@@ -901,35 +902,150 @@ ul { list-style: none; }
 .reveal-delay-3 { transition-delay: 0.3s; }
 
 /* ═══ RESPONSIVE ══════════════════════════════════════════════ */
+
+/* ─── Tablet / Small desktop (≤ 900px) ───────────────────────── */
 @media (max-width: 900px) {
+  /* Header: hide desktop nav, show bottom nav */
   .header-nav { display: none; }
   #header-contact-btn { display: none; }
+  .header-inner { padding: 0 var(--sp-lg); }
   .bottom-nav { display: flex; }
-  body { padding-bottom: calc(80px + env(safe-area-inset-bottom, 0px)); }
+  body { padding-bottom: calc(72px + env(safe-area-inset-bottom, 0px)); }
 
+  /* Section spacing */
   .section { padding: var(--sp-2xl) var(--sp-lg); }
-  .stats-row { padding: var(--sp-lg); }
+  .section-header-block { margin-bottom: var(--sp-xl); }
+
+  /* Stats row */
+  .stats-row { padding: var(--sp-lg); gap: var(--sp-sm); }
   .stat-card { padding: 0 var(--sp-md); }
 
+  /* Grids → single column */
   .projects-grid { grid-template-columns: 1fr; }
-  .cert-grid { grid-template-columns: 1fr; }
-  .socials-grid { grid-template-columns: 1fr; }
+  .cert-grid     { grid-template-columns: 1fr; }
+  .socials-grid  { grid-template-columns: 1fr; }
+
+  /* Contact form */
   .form-row { grid-template-columns: 1fr; }
+  .contact-glow { width: 100%; height: 400px; }
+
+  /* Footer: stack vertically */
+  .footer-inner {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: var(--sp-md);
+  }
+
+  /* Timeline slightly tighter */
+  .timeline { padding-left: 24px; }
+  .timeline-dot { left: -24px; }
 }
 
-@media (max-width: 600px) {
-  .hero-name { font-size: 32px; }
+/* ─── Mobile (≤ 640px) ───────────────────────────────────────── */
+@media (max-width: 640px) {
+  :root {
+    --sp-xl:  1.75rem;
+    --sp-2xl: 2.5rem;
+    --sp-3xl: 3.5rem;
+  }
+
+  /* Header */
+  .header-inner { padding: 0 var(--sp-md); gap: var(--sp-md); }
+  .header-logo { font-size: 16px; }
+
+  /* Hero */
+  .hero { min-height: 80vh; padding-top: var(--sp-lg); }
+  .hero-name { font-size: clamp(28px, 8vw, 40px); }
+  .hero-role { font-size: 11px; }
+  .hero-tagline { font-size: 14px; max-width: 100%; padding: 0 var(--sp-sm); }
+  .hero-meta {
+    flex-direction: column;
+    align-items: center;
+    gap: var(--sp-xs);
+  }
+  .meta-sep { display: none; }
   .hero-avatar { width: 120px; height: 120px; }
   .hero-avatar-wrap { width: 120px; height: 120px; }
+  .hero-actions { gap: var(--sp-sm); }
+
+  /* Stats */
   .stat-divider { display: none; }
-  .stats-row { flex-direction: row; justify-content: space-around; flex-wrap: wrap; gap: var(--sp-md); }
-  .stat-card { min-width: 70px; padding: 0 var(--sp-sm); }
-  .stat-number { font-size: 24px; }
-  .skills-grid { grid-template-columns: 1fr 1fr; }
+  .stats-row {
+    flex-direction: row;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    gap: var(--sp-md);
+    padding: var(--sp-lg) var(--sp-md);
+  }
+  .stat-card { min-width: 70px; padding: 0 var(--sp-xs); flex: none; }
+  .stat-number { font-size: 26px; }
+  .stat-label { font-size: 9px; }
+
+  /* Content blocks */
+  .block-body { font-size: 14px; max-width: 100%; }
+
+  /* Skills */
+  .skills-grid { grid-template-columns: 1fr 1fr; gap: var(--sp-md); }
+  .skill-bars { max-width: 100%; }
+
+  /* Experience tabs */
+  .exp-tabs { gap: 2px; padding: 3px; }
+  .exp-tab { padding: 0.4rem 0.75rem; font-size: 10px; }
+
+  /* Timeline */
+  .timeline { padding-left: 20px; gap: var(--sp-lg); }
+  .timeline-dot { left: -20px; top: 14px; width: 9px; height: 9px; }
+  .tc-title { font-size: 15px; }
+  .tc-desc { font-size: 12px; }
+
+  /* Projects grid */
+  .projects-grid { gap: var(--sp-md); }
+  .pc-title { font-size: 15px; }
+
+  /* Section title */
+  .section-title { font-size: clamp(22px, 6vw, 32px); }
+  .block-title { font-size: clamp(18px, 5vw, 24px); }
+
+  /* Socials */
+  .social-card { padding: var(--sp-md); gap: var(--sp-sm); }
+  .social-icon-wrap { width: 40px; height: 40px; }
+  .social-icon { width: 18px; height: 18px; }
+  .social-name { font-size: 14px; }
+  .social-handle { font-size: 10px; }
+
+  /* Contact */
+  .contact-sub { font-size: 14px; }
+  .contact-glow { display: none; }
+
+  /* Section padding */
+  .section { padding: var(--sp-xl) var(--sp-md); }
+  .section--contact { padding-top: var(--sp-xl); }
 }
 
+/* ─── Small mobile (≤ 400px) ─────────────────────────────────── */
 @media (max-width: 400px) {
+  /* Skills: stack to single column */
   .skills-grid { grid-template-columns: 1fr; }
+
+  /* Hero actions: stack full-width */
   .hero-actions { flex-direction: column; width: 100%; }
   .btn-primary, .btn-secondary { width: 100%; justify-content: center; }
+
+  /* Stats: 2×2 grid */
+  .stat-card { min-width: 80px; }
+
+  /* Timeline even tighter */
+  .timeline { padding-left: 18px; }
+  .timeline-dot { left: -18px; }
+
+  /* Header */
+  .header-inner { padding: 0 var(--sp-sm); }
+  .header-logo .header-name { font-size: 15px; }
+}
+
+/* ─── Landscape phone safe area ───────────────────────────────── */
+@media (max-width: 900px) and (orientation: landscape) {
+  .hero { min-height: 100dvh; }
+  .bottom-nav { padding-bottom: env(safe-area-inset-bottom, 4px); }
 }
